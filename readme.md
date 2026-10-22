@@ -1,37 +1,39 @@
 # ✨ ChatNova AI
 
-### Your Intelligent AI Chat Companion
+### Your Intelligent AI Chat Companion 🤖
 
-ChatNova AI is a modern, responsive chatbot web application built using HTML, CSS, and JavaScript. It features a clean chat interface, conversation history, theme switching, message controls, and a modular response engine.
-
-> **Note:** The current version uses predefined demo responses. A real AI model requires a backend API connection.
+ChatNova AI is a modern, responsive chatbot web application built using HTML, CSS, and JavaScript. It features an interactive chat interface, conversation history, dark and light themes, and a modular response engine.
 
 ## 🌐 Live Demo
 
-🚀 **Live Demo:** `https://dhilip-2007.github.io/chatnova-ai/`
+🚀 **Live Demo:** [https://dhilip-2007.github.io/ChatNova-AI/](https://dhilip-2007.github.io/ChatNova-AI/)
 
-📂 **GitHub Repository:** `https://github.com/dhilip-2007/chatnova-ai`
+📂 **GitHub Repository:** [https://github.com/dhilip-2007/ChatNova-AI](https://github.com/dhilip-2007/ChatNova-AI)
 
-*If the live demo link does not open, enable GitHub Pages in the repository settings.*
+> **Note:** The live demo requires GitHub Pages to be enabled in the repository settings. The current chatbot uses predefined demo responses; real AI responses require a backend and AI model integration.
+
+---
 
 ## 📸 Features
 
 - 💬 Interactive chatbot interface
-- 🎨 Modern dark and light themes
+- 🎨 Dark and light themes
 - 📱 Responsive design for desktop and mobile
 - 🗂️ Multiple conversations and chat history
-- ➕ Start a new conversation
-- 🧹 Clear conversation history
+- ➕ Start a new chat
+- 🧹 Clear conversation messages
 - 📋 Copy messages
 - 🔄 Regenerate demo responses
 - ⌨️ Enter-to-send keyboard support
 - 📎 File attachment interface
-- 💾 Local storage for conversations and preferences
+- 💾 Save chat history using browser local storage
 - ⏳ Typing indicator
 - 🔔 Toast notifications
-- ⚙️ Centralized application configuration
+- ⚙️ Centralized configuration
 - 🧩 Modular JavaScript response engine
 - 🔌 Optional backend API integration
+
+---
 
 ## 🛠️ Technologies Used
 
@@ -40,9 +42,12 @@ ChatNova AI is a modern, responsive chatbot web application built using HTML, CS
 | HTML5 | Webpage structure |
 | CSS3 | Styling, animations, responsive layout |
 | JavaScript | Chat functionality and application logic |
-| Local Storage | Save conversations and preferences |
-| Git & GitHub | Version control and project hosting |
+| Local Storage | Store conversations and preferences |
+| Git | Version control |
+| GitHub | Source code hosting |
 | GitHub Pages | Static website deployment |
+
+---
 
 ## 📁 Project Structure
 
@@ -56,77 +61,89 @@ ChatNova-AI/
 └── README.md
 ```
 
+---
+
 ## 🚀 Getting Started
 
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/dhilip-2007/chatnova-ai.git
+git clone https://github.com/dhilip-2007/ChatNova-AI.git
 ```
 
-### 2. Open the project folder
+### 2. Navigate to the project folder
 
 ```bash
-cd chatnova-ai
+cd ChatNova-AI
 ```
 
-### 3. Run the application
+### 3. Open the project
 
-Open `index.html` in your browser, or use the **Live Server** extension in Visual Studio Code.
+Open `index.html` in your browser, or open the folder in Visual Studio Code and use the Live Server extension.
 
-For a better development experience, open the project folder in VS Code and launch Live Server.
+---
 
 ## 🧠 How It Works
 
-1. The user enters a message in the chat interface.
-2. JavaScript captures the message and displays it in the conversation.
-3. The response engine processes the message.
+1. The user enters a message in the chatbot.
+2. JavaScript captures and displays the message.
+3. The AI response engine processes the input.
 4. The demo engine returns a predefined response.
-5. The application displays the response in the chat window.
-6. Conversation history and theme preferences are saved in browser local storage.
+5. The response appears in the chat interface.
+6. Conversation history and theme preferences can be stored in browser local storage.
 
-## 🔌 Real AI Integration
+**Current limitation:** The demo response engine does not use a trained AI model. A backend integration is needed for real AI-generated responses.
 
-ChatNova AI includes a response-engine structure that can be connected to a backend.
+---
 
-To enable real AI responses:
+## 🔌 Future AI Integration
 
-1. Build a backend API using Node.js and Express.
+ChatNova AI can be extended with a backend service.
+
+Planned integration steps:
+
+1. Build a backend using Node.js and Express.
 2. Connect the backend to an AI model provider.
-3. Store private API keys in server-side environment variables.
-4. Update the frontend API endpoint.
-5. Set demo mode to `false` in `ai.js`.
-6. Test the application and handle API errors securely.
+3. Store API keys securely in server-side environment variables.
+4. Configure the frontend to call the backend.
+5. Add conversation context and error handling.
+6. Test and deploy the application.
 
-**Security:** Never store private API keys, passwords, or database credentials in frontend JavaScript files.
+🔒 **Security:** Never put private API keys, passwords, or database credentials in frontend JavaScript files.
 
-## 🌍 Deployment with GitHub Pages
+---
 
-1. Push your project to the `chatnova-ai` GitHub repository.
-2. Open the repository on GitHub.
-3. Go to **Settings → Pages**.
-4. Under the build and deployment settings, select **Deploy from a branch**.
+## 🌍 GitHub Pages Deployment
+
+To publish ChatNova AI:
+
+1. Open the [ChatNova-AI repository](https://github.com/dhilip-2007/ChatNova-AI).
+2. Select **Settings**.
+3. Open **Pages**.
+4. Under **Build and deployment**, choose **Deploy from a branch**.
 5. Select the `main` branch and `/ (root)` folder.
-6. Save the settings and wait for deployment.
+6. Click **Save** and wait for deployment.
 
-Your expected live URL is:
+After successful deployment, visit:
 
-`https://dhilip-2007.github.io/chatnova-ai/`
+**https://dhilip-2007.github.io/ChatNova-AI/**
 
-*The URL will work only after the repository exists and GitHub Pages deployment succeeds.*
+---
 
 ## 🔮 Future Enhancements
 
-- 🤖 Real AI-powered responses
+- 🤖 Real AI-powered conversations
 - 🎙️ Speech-to-text input
 - 🔊 Text-to-speech responses
 - 📄 Document summarization
 - 🖼️ Image understanding
 - 👤 User authentication
 - ☁️ Cloud-based conversation storage
-- 🔍 Search conversation history
+- 🔍 Search chat history
 - 📤 Export conversations
-- 🧠 Improved conversation context
+- 🧠 Improved contextual responses
+
+---
 
 ## 🎯 Learning Objectives
 
@@ -137,13 +154,16 @@ This project demonstrates practical skills in:
 - DOM manipulation
 - Responsive web design
 - Browser local storage
-- Modular application architecture
+- Modular JavaScript architecture
 - API integration concepts
-- GitHub version control and deployment
+- Git and GitHub workflows
+- Static website deployment
+
+---
 
 ## 🤝 Contributing
 
-Contributions and suggestions are welcome.
+Suggestions and improvements are welcome.
 
 1. Fork the repository.
 2. Create a feature branch.
@@ -151,13 +171,14 @@ Contributions and suggestions are welcome.
 4. Commit and push your changes.
 5. Open a pull request.
 
+---
+
 ## 📜 License
 
-This project is available for educational and personal learning purposes. Add a formal open-source license if you want to specify permissions for reuse and redistribution.
+This project is intended for educational and personal learning purposes. Add an open-source license file if you want to specify reuse and redistribution permissions.
 
 ---
 
-**Built with ❤️ using HTML, CSS, and JavaScript.**
+### 👨‍💻 Built with ❤️ using HTML, CSS, and JavaScript
 
-*ChatNova AI — Ask anything. Explore everything.*
-
+**ChatNova AI — Ask anything. Explore everything.**
