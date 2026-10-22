@@ -1,0 +1,1138 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#212121">
+    <meta name="description" content="ChatNova AI — Your intelligent AI assistant for learning, coding, writing, and creativity.">
+    <title>ChatNova AI — Intelligent Assistant</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+
+<body>
+<div class="app-shell" id="app">
+
+    <!-- =========================================
+         SIDEBAR
+    ========================================== -->
+    <aside class="sidebar" id="sidebar">
+
+        <div class="sidebar-top">
+            <a href="#" class="brand" aria-label="ChatNova home">
+                <span class="brand-mark">
+                    <i class="fa-solid fa-asterisk"></i>
+                </span>
+                <span class="brand-name">ChatNova</span>
+                <span class="brand-version">AI</span>
+            </a>
+
+            <button class="icon-btn sidebar-toggle"
+                    id="sidebarToggle"
+                    title="Close sidebar"
+                    aria-label="Close sidebar">
+                <i class="fa-solid fa-angles-left"></i>
+            </button>
+        </div>
+
+        <div class="sidebar-actions">
+            <button class="primary-sidebar-btn" id="newChatBtn">
+                <span class="btn-icon"><i class="fa-solid fa-plus"></i></span>
+                <span>New chat</span>
+                <kbd>Ctrl K</kbd>
+            </button>
+
+            <button class="sidebar-action" id="searchChatsBtn">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <span>Search chats</span>
+                <kbd>Ctrl /</kbd>
+            </button>
+
+            <button class="sidebar-action" id="libraryBtn">
+                <i class="fa-solid fa-layer-group"></i>
+                <span>Library</span>
+            </button>
+        </div>
+
+        <div class="sidebar-scroll">
+
+            <section class="sidebar-section">
+                <div class="section-heading">
+                    <span>YOUR WORKSPACE</span>
+                </div>
+
+                <button class="sidebar-nav-item active" data-view="chat">
+                    <i class="fa-regular fa-message"></i>
+                    <span>AI Assistant</span>
+                </button>
+
+                <button class="sidebar-nav-item" data-view="explore">
+                    <i class="fa-regular fa-compass"></i>
+                    <span>Explore prompts</span>
+                </button>
+
+                <button class="sidebar-nav-item" data-view="projects">
+                    <i class="fa-regular fa-folder-open"></i>
+                    <span>Projects</span>
+                    <span class="nav-label">NEW</span>
+                </button>
+            </section>
+
+            <section class="sidebar-section history-section">
+                <div class="section-heading history-title">
+                    <span>RECENT CONVERSATIONS</span>
+                    <button class="tiny-icon-btn" id="historyMenuBtn"
+                            title="History options">
+                        <i class="fa-solid fa-ellipsis"></i>
+                    </button>
+                </div>
+
+                <div class="history-search-wrap">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="search" id="historySearch"
+                           placeholder="Filter conversations..."
+                           aria-label="Filter conversations">
+                </div>
+
+                <div class="chat-history" id="chatHistory">
+                    <div class="history-empty">
+                        <i class="fa-regular fa-comments"></i>
+                        <p>Your conversations will appear here.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="sidebar-section">
+                <div class="section-heading">
+                    <span>QUICK ACCESS</span>
+                </div>
+
+                <button class="sidebar-nav-item" data-prompt="Help me learn programming step by step.">
+                    <i class="fa-solid fa-code"></i>
+                    <span>Learn to code</span>
+                </button>
+
+                <button class="sidebar-nav-item" data-prompt="Help me write a professional document.">
+                    <i class="fa-regular fa-pen-to-square"></i>
+                    <span>Writing assistant</span>
+                </button>
+
+                <button class="sidebar-nav-item" data-prompt="Explain this topic with examples.">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <span>Study assistant</span>
+                </button>
+            </section>
+
+        </div>
+
+        <div class="sidebar-bottom">
+
+            <div class="plan-card">
+                <div class="plan-card-icon">
+                    <i class="fa-solid fa-sparkles"></i>
+                </div>
+                <div class="plan-card-content">
+                    <strong>Make ideas happen</strong>
+                    <p>Your AI workspace is ready.</p>
+                </div>
+                <button class="tiny-icon-btn" id="planInfoBtn"
+                        aria-label="Plan information">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                </button>
+            </div>
+
+            <div class="profile-menu-wrap">
+                <button class="profile-button" id="profileButton">
+                    <span class="profile-avatar">CN</span>
+                    <span class="profile-info">
+                        <strong id="profileName">Guest User</strong>
+                        <small id="profilePlan">Personal workspace</small>
+                    </span>
+                    <i class="fa-solid fa-ellipsis profile-more"></i>
+                </button>
+
+                <div class="profile-dropdown" id="profileDropdown" hidden>
+                    <button data-modal="settingsModal">
+                        <i class="fa-solid fa-gear"></i> Settings
+                    </button>
+                    <button data-modal="helpModal">
+                        <i class="fa-regular fa-circle-question"></i> Help center
+                    </button>
+                    <button id="aboutBtn">
+                        <i class="fa-solid fa-circle-info"></i> About ChatNova
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </aside>
+
+    <!-- =========================================
+         MAIN APPLICATION
+    ========================================== -->
+    <main class="main-panel" id="mainPanel">
+
+        <!-- TOP NAVIGATION -->
+        <header class="topbar">
+
+            <div class="topbar-left">
+                <button class="icon-btn mobile-menu-btn" id="mobileMenuBtn"
+                        aria-label="Open navigation">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+                <button class="icon-btn collapsed-sidebar-btn"
+                        id="openSidebarBtn"
+                        aria-label="Open sidebar"
+                        hidden>
+                    <i class="fa-solid fa-angles-right"></i>
+                </button>
+
+                <div class="model-selector-wrap">
+                    <button class="model-selector" id="modelSelector"
+                            aria-haspopup="true" aria-expanded="false">
+                        <span class="model-symbol">
+                            <i class="fa-solid fa-asterisk"></i>
+                        </span>
+                        <span class="model-name">ChatNova</span>
+                        <span class="model-tier">AI</span>
+                        <i class="fa-solid fa-chevron-down model-chevron"></i>
+                    </button>
+
+                    <div class="model-dropdown" id="modelDropdown" hidden>
+                        <div class="dropdown-heading">CHOOSE ASSISTANT</div>
+
+                        <button class="model-option selected"
+                                data-model="chatnova">
+                            <span class="model-option-icon">
+                                <i class="fa-solid fa-sparkles"></i>
+                            </span>
+                            <span>
+                                <strong>ChatNova AI</strong>
+                                <small>General-purpose assistant</small>
+                            </span>
+                            <i class="fa-solid fa-check model-check"></i>
+                        </button>
+
+                        <button class="model-option"
+                                data-model="creative">
+                            <span class="model-option-icon creative-icon">
+                                <i class="fa-solid fa-palette"></i>
+                            </span>
+                            <span>
+                                <strong>Creative Assistant</strong>
+                                <small>Writing and brainstorming</small>
+                            </span>
+                        </button>
+
+                        <button class="model-option"
+                                data-model="coder">
+                            <span class="model-option-icon coder-icon">
+                                <i class="fa-solid fa-code"></i>
+                            </span>
+                            <span>
+                                <strong>Code Assistant</strong>
+                                <small>Programming and debugging</small>
+                            </span>
+                        </button>
+
+                        <div class="dropdown-footer">
+                            AI model options depend on backend configuration.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="topbar-right">
+
+                <span class="connection-status" id="connectionStatus">
+                    <span class="status-dot"></span>
+                    <span>Workspace</span>
+                </span>
+
+                <button class="icon-btn topbar-icon" id="shareChatBtn"
+                        title="Share conversation"
+                        aria-label="Share conversation">
+                    <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                </button>
+
+                <button class="icon-btn topbar-icon" id="themeToggle"
+                        title="Switch appearance"
+                        aria-label="Switch appearance">
+                    <i class="fa-regular fa-moon"></i>
+                </button>
+
+                <button class="topbar-avatar" id="topbarAvatar"
+                        aria-label="Open profile">
+                    CN
+                </button>
+            </div>
+        </header>
+
+        <!-- =====================================
+             CONTENT VIEWPORT
+        ====================================== -->
+        <section class="content-viewport" id="contentViewport">
+
+            <!-- WELCOME VIEW -->
+            <section class="welcome-view" id="welcomeView">
+
+                <div class="welcome-content">
+
+                    <div class="welcome-emblem">
+                        <div class="emblem-orbit orbit-one"></div>
+                        <div class="emblem-orbit orbit-two"></div>
+                        <div class="emblem-core">
+                            <i class="fa-solid fa-asterisk"></i>
+                        </div>
+                        <span class="emblem-spark spark-one">✦</span>
+                        <span class="emblem-spark spark-two">✧</span>
+                    </div>
+
+                    <div class="welcome-eyebrow">
+                        <span class="eyebrow-dot"></span>
+                        YOUR PERSONAL AI WORKSPACE
+                    </div>
+
+                    <h1 class="welcome-title">
+                        Ideas start here<span class="title-period">.</span>
+                    </h1>
+
+                    <p class="welcome-subtitle">
+                        Think bigger, learn faster, and turn your ideas
+                        into something extraordinary.
+                    </p>
+
+                    <div class="welcome-prompt-label">
+                        <span>WHAT WOULD YOU LIKE TO DO?</span>
+                        <span class="prompt-label-line"></span>
+                    </div>
+
+                    <div class="prompt-grid" id="promptGrid">
+
+                        <button class="prompt-card"
+                                data-prompt="Explain artificial intelligence in simple English with real-world examples.">
+                            <span class="prompt-card-top">
+                                <span class="prompt-card-icon icon-indigo">
+                                    <i class="fa-solid fa-brain"></i>
+                                </span>
+                                <i class="fa-solid fa-arrow-up-right-from-square card-arrow"></i>
+                            </span>
+                            <strong>Learn something new</strong>
+                            <span>Understand complex ideas simply.</span>
+                        </button>
+
+                        <button class="prompt-card"
+                                data-prompt="Give me 5 unique web development project ideas with features and technologies.">
+                            <span class="prompt-card-top">
+                                <span class="prompt-card-icon icon-amber">
+                                    <i class="fa-solid fa-lightbulb"></i>
+                                </span>
+                                <i class="fa-solid fa-arrow-up-right-from-square card-arrow"></i>
+                            </span>
+                            <strong>Explore new ideas</strong>
+                            <span>Discover concepts and possibilities.</span>
+                        </button>
+
+                        <button class="prompt-card"
+                                data-prompt="Write a clean Python program to check if a number is prime and explain the code.">
+                            <span class="prompt-card-top">
+                                <span class="prompt-card-icon icon-green">
+                                    <i class="fa-solid fa-code"></i>
+                                </span>
+                                <i class="fa-solid fa-arrow-up-right-from-square card-arrow"></i>
+                            </span>
+                            <strong>Build with code</strong>
+                            <span>Create, debug, and improve projects.</span>
+                        </button>
+
+                        <button class="prompt-card"
+                                data-prompt="Create a realistic weekly study plan for a computer science student.">
+                            <span class="prompt-card-top">
+                                <span class="prompt-card-icon icon-rose">
+                                    <i class="fa-solid fa-calendar-check"></i>
+                                </span>
+                                <i class="fa-solid fa-arrow-up-right-from-square card-arrow"></i>
+                            </span>
+                            <strong>Plan and organize</strong>
+                            <span>Make your goals easier to achieve.</span>
+                        </button>
+
+                    </div>
+
+                    <div class="welcome-bottom-note">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <span>Your workspace, your ideas. Start a conversation anytime.</span>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- CHAT VIEW -->
+            <section class="conversation-view" id="conversationView" hidden>
+
+                <div class="conversation-header" id="conversationHeader">
+                    <div class="conversation-title-wrap">
+                        <span class="conversation-status-dot"></span>
+                        <h2 id="conversationTitle">New conversation</h2>
+                    </div>
+
+                    <div class="conversation-header-actions">
+                        <button class="icon-btn" id="renameChatBtn"
+                                title="Rename conversation">
+                            <i class="fa-regular fa-pen-to-square"></i>
+                        </button>
+
+                        <button class="icon-btn" id="conversationMenuBtn"
+                                title="Conversation options">
+                            <i class="fa-solid fa-ellipsis"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="message-list" id="messageList"
+                     aria-live="polite" aria-relevant="additions">
+
+                    <!-- JavaScript inserts messages here. -->
+
+                </div>
+
+                <div class="conversation-bottom-space"></div>
+            </section>
+
+            <!-- SEARCH VIEW -->
+            <section class="search-view" id="searchView" hidden>
+                <div class="page-heading">
+                    <span class="page-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
+                    <h1>Search conversations</h1>
+                    <p>Find something from your previous chats.</p>
+                </div>
+
+                <div class="search-panel">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="search" id="globalSearchInput"
+                           placeholder="Search your conversations..."
+                           aria-label="Search all conversations">
+                    <button class="text-button" id="clearGlobalSearch">Clear</button>
+                </div>
+
+                <div class="search-results" id="searchResults">
+                    <div class="empty-state">
+                        <i class="fa-regular fa-folder-open"></i>
+                        <p>Search your saved conversations.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- EXPLORE VIEW -->
+            <section class="explore-view" id="exploreView" hidden>
+                <div class="page-heading">
+                    <span class="page-icon"><i class="fa-regular fa-compass"></i></span>
+                    <h1>Explore prompts</h1>
+                    <p>Choose a starting point for your next conversation.</p>
+                </div>
+
+                <div class="explore-category-row" id="exploreCategories">
+                    <button class="category-chip active" data-category="all">All prompts</button>
+                    <button class="category-chip" data-category="coding">Coding</button>
+                    <button class="category-chip" data-category="learning">Learning</button>
+                    <button class="category-chip" data-category="writing">Writing</button>
+                    <button class="category-chip" data-category="creative">Creative</button>
+                    <button class="category-chip" data-category="productivity">Productivity</button>
+                </div>
+
+                <div class="explore-grid" id="exploreGrid">
+
+                    <button class="explore-card"
+                            data-category="coding"
+                            data-prompt="Create a beginner-friendly JavaScript project and explain every step.">
+                        <span class="explore-icon explore-blue"><i class="fa-solid fa-code"></i></span>
+                        <span class="explore-category">CODING</span>
+                        <strong>Build your first project</strong>
+                        <span>Learn by creating something practical.</span>
+                    </button>
+
+                    <button class="explore-card"
+                            data-category="learning"
+                            data-prompt="Explain computer networking using everyday examples and a simple study guide.">
+                        <span class="explore-icon explore-purple"><i class="fa-solid fa-graduation-cap"></i></span>
+                        <span class="explore-category">LEARNING</span>
+                        <strong>Understand a tough topic</strong>
+                        <span>Turn complicated concepts into simple lessons.</span>
+                    </button>
+
+                    <button class="explore-card"
+                            data-category="writing"
+                            data-prompt="Help me write a professional project description for my software portfolio.">
+                        <span class="explore-icon explore-green"><i class="fa-solid fa-pen-nib"></i></span>
+                        <span class="explore-category">WRITING</span>
+                        <strong>Write professionally</strong>
+                        <span>Improve clarity and presentation.</span>
+                    </button>
+
+                    <button class="explore-card"
+                            data-category="creative"
+                            data-prompt="Generate original startup ideas involving AI and education.">
+                        <span class="explore-icon explore-orange"><i class="fa-solid fa-wand-magic-sparkles"></i></span>
+                        <span class="explore-category">CREATIVE</span>
+                        <strong>Brainstorm something new</strong>
+                        <span>Discover ideas and new directions.</span>
+                    </button>
+
+                    <button class="explore-card"
+                            data-category="productivity"
+                            data-prompt="Help me organize my tasks into a simple weekly productivity plan.">
+                        <span class="explore-icon explore-rose"><i class="fa-solid fa-list-check"></i></span>
+                        <span class="explore-category">PRODUCTIVITY</span>
+                        <strong>Get organized</strong>
+                        <span>Break big goals into manageable tasks.</span>
+                    </button>
+
+                    <button class="explore-card"
+                            data-category="coding"
+                            data-prompt="Review a beginner's code for bugs, readability, and performance. Explain improvements.">
+                        <span class="explore-icon explore-cyan"><i class="fa-solid fa-bug"></i></span>
+                        <span class="explore-category">CODING</span>
+                        <strong>Debug your code</strong>
+                        <span>Find problems and understand solutions.</span>
+                    </button>
+
+                </div>
+            </section>
+
+            <!-- PROJECTS VIEW -->
+            <section class="projects-view" id="projectsView" hidden>
+                <div class="page-heading">
+                    <span class="page-icon"><i class="fa-regular fa-folder-open"></i></span>
+                    <h1>Your projects</h1>
+                    <p>Keep related conversations organized in one place.</p>
+                </div>
+
+                <div class="project-toolbar">
+                    <div class="project-count" id="projectCount">0 projects</div>
+                    <button class="primary-btn" id="createProjectBtn">
+                        <i class="fa-solid fa-plus"></i> Create project
+                    </button>
+                </div>
+
+                <div class="projects-grid" id="projectsGrid">
+                    <div class="empty-state">
+                        <i class="fa-regular fa-folder-open"></i>
+                        <p>Create a project to organize related chats.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- LIBRARY VIEW -->
+            <section class="library-view" id="libraryView" hidden>
+                <div class="page-heading">
+                    <span class="page-icon"><i class="fa-solid fa-layer-group"></i></span>
+                    <h1>Your library</h1>
+                    <p>Access saved items and useful resources.</p>
+                </div>
+
+                <div class="library-tabs">
+                    <button class="library-tab active" data-library="saved">Saved items</button>
+                    <button class="library-tab" data-library="files">Files</button>
+                </div>
+
+                <div class="library-content" id="libraryContent">
+                    <div class="empty-state">
+                        <i class="fa-regular fa-bookmark"></i>
+                        <p>Items you save will appear here.</p>
+                    </div>
+                </div>
+            </section>
+
+        </section>
+
+        <!-- =====================================
+             MESSAGE COMPOSER
+        ====================================== -->
+        <footer class="composer-area" id="composerArea">
+
+            <div class="composer-container">
+
+                <div class="attachment-preview" id="attachmentPreview" hidden>
+                    <div class="attachment-preview-info">
+                        <i class="fa-regular fa-file-lines"></i>
+                        <span id="attachmentFileName">Attached file</span>
+                    </div>
+                    <button class="icon-btn" id="removeAttachmentBtn"
+                            aria-label="Remove attachment">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+
+                <div class="composer-box" id="composerBox">
+
+                    <div class="composer-main">
+                        <textarea id="messageInput"
+                                  rows="1"
+                                  maxlength="20000"
+                                  placeholder="Message ChatNova..."
+                                  aria-label="Write a message"></textarea>
+                    </div>
+
+                    <div class="composer-controls">
+
+                        <div class="composer-left-controls">
+
+                            <button class="composer-tool-btn"
+                                    id="attachFileBtn"
+                                    title="Attach file"
+                                    aria-label="Attach file">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+
+                            <button class="composer-chip"
+                                    id="webSearchBtn"
+                                    aria-pressed="false">
+                                <i class="fa-solid fa-globe"></i>
+                                <span>Search</span>
+                            </button>
+
+                            <button class="composer-chip"
+                                    id="reasoningBtn"
+                                    aria-pressed="false">
+                                <i class="fa-solid fa-brain"></i>
+                                <span>Reason</span>
+                            </button>
+
+                        </div>
+
+                        <div class="composer-right-controls">
+
+                            <span class="character-count" id="characterCount">0 / 20000</span>
+
+                            <button class="composer-tool-btn voice-btn"
+                                    id="voiceInputBtn"
+                                    title="Voice input"
+                                    aria-label="Start voice input">
+                                <i class="fa-solid fa-microphone"></i>
+                            </button>
+
+                            <button class="send-btn" id="sendMessageBtn"
+                                    disabled
+                                    title="Send message"
+                                    aria-label="Send message">
+                                <i class="fa-solid fa-arrow-up"></i>
+                            </button>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="composer-meta">
+                    <span class="composer-hint">
+                        <i class="fa-regular fa-keyboard"></i>
+                        <kbd>Enter</kbd> to send · <kbd>Shift + Enter</kbd> for a new line
+                    </span>
+                    <span class="composer-disclaimer">
+                        AI can make mistakes. Verify important information.
+                    </span>
+                </div>
+
+            </div>
+
+        </footer>
+
+    </main>
+
+</div>
+
+<!-- =========================================
+     MOBILE SIDEBAR OVERLAY
+========================================== -->
+<div class="mobile-overlay" id="mobileOverlay" hidden></div>
+
+<!-- =========================================
+     GLOBAL SEARCH MODAL
+========================================== -->
+<section class="modal-overlay" id="searchModal" hidden
+         role="dialog" aria-modal="true" aria-labelledby="searchModalTitle">
+    <div class="modal search-modal">
+
+        <div class="modal-header">
+            <div>
+                <span class="modal-eyebrow">WORKSPACE</span>
+                <h2 id="searchModalTitle">Search your chats</h2>
+            </div>
+            <button class="icon-btn modal-close" data-close-modal
+                    aria-label="Close search">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <div class="modal-search-input">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input id="modalSearchInput" type="search"
+                   placeholder="Search conversations..."
+                   autocomplete="off">
+            <kbd>ESC</kbd>
+        </div>
+
+        <div class="modal-results" id="modalSearchResults">
+            <div class="modal-empty">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <p>Start typing to search conversations.</p>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <span><kbd>↑</kbd> <kbd>↓</kbd> Navigate</span>
+            <span><kbd>Enter</kbd> Open conversation</span>
+        </div>
+    </div>
+</section>
+
+<!-- =========================================
+     SETTINGS MODAL
+========================================== -->
+<section class="modal-overlay" id="settingsModal" hidden
+         role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+    <div class="modal settings-modal">
+
+        <div class="modal-header">
+            <div>
+                <span class="modal-eyebrow">PREFERENCES</span>
+                <h2 id="settingsTitle">Settings</h2>
+            </div>
+            <button class="icon-btn modal-close" data-close-modal
+                    aria-label="Close settings">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <div class="settings-layout">
+
+            <nav class="settings-nav" aria-label="Settings sections">
+                <button class="settings-nav-item active" data-settings-tab="general">
+                    <i class="fa-solid fa-sliders"></i> General
+                </button>
+                <button class="settings-nav-item" data-settings-tab="appearance">
+                    <i class="fa-solid fa-palette"></i> Appearance
+                </button>
+                <button class="settings-nav-item" data-settings-tab="personalization">
+                    <i class="fa-regular fa-user"></i> Personalization
+                </button>
+                <button class="settings-nav-item" data-settings-tab="data">
+                    <i class="fa-solid fa-database"></i> Data controls
+                </button>
+                <button class="settings-nav-item" data-settings-tab="about">
+                    <i class="fa-solid fa-circle-info"></i> About
+                </button>
+            </nav>
+
+            <div class="settings-panel">
+
+                <section class="settings-tab-content active" data-settings-content="general">
+                    <h3>General preferences</h3>
+                    <p class="settings-description">Manage your workspace behavior.</p>
+
+                    <div class="setting-row">
+                        <div class="setting-copy">
+                            <strong>Sound effects</strong>
+                            <small>Play sounds for interface interactions.</small>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="soundToggle">
+                            <span class="switch-slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="setting-row">
+                        <div class="setting-copy">
+                            <strong>Show timestamps</strong>
+                            <small>Display the time on messages.</small>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="timestampToggle" checked>
+                            <span class="switch-slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="setting-row">
+                        <div class="setting-copy">
+                            <strong>Confirm before clearing</strong>
+                            <small>Ask before deleting a conversation.</small>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="confirmDeleteToggle" checked>
+                            <span class="switch-slider"></span>
+                        </label>
+                    </div>
+                </section>
+
+                <section class="settings-tab-content" data-settings-content="appearance">
+                    <h3>Appearance</h3>
+                    <p class="settings-description">Choose the look of your workspace.</p>
+
+                    <div class="appearance-options">
+                        <button class="appearance-option active" data-theme-choice="dark">
+                            <span class="theme-preview preview-dark">
+                                <span></span><span></span><span></span>
+                            </span>
+                            <strong>Dark</strong>
+                        </button>
+
+                        <button class="appearance-option" data-theme-choice="light">
+                            <span class="theme-preview preview-light">
+                                <span></span><span></span><span></span>
+                            </span>
+                            <strong>Light</strong>
+                        </button>
+
+                        <button class="appearance-option" data-theme-choice="system">
+                            <span class="theme-preview preview-system">
+                                <span></span><span></span><span></span>
+                            </span>
+                            <strong>System</strong>
+                        </button>
+                    </div>
+
+                    <div class="setting-row">
+                        <div class="setting-copy">
+                            <strong>Compact interface</strong>
+                            <small>Use tighter spacing between messages.</small>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="compactToggle">
+                            <span class="switch-slider"></span>
+                        </label>
+                    </div>
+                </section>
+
+                <section class="settings-tab-content" data-settings-content="personalization">
+                    <h3>Personalization</h3>
+                    <p class="settings-description">Customize your workspace identity.</p>
+
+                    <label class="form-label" for="displayNameInput">Display name</label>
+                    <input class="form-input" id="displayNameInput"
+                           maxlength="50" placeholder="Your name">
+
+                    <label class="form-label" for="customInstructions">
+                        Custom instructions
+                    </label>
+                    <textarea class="form-textarea" id="customInstructions"
+                              maxlength="2000"
+                              placeholder="How should ChatNova respond?"></textarea>
+
+                    <p class="form-help">
+                        These preferences are for your workspace. Real AI personalization
+                        requires connecting them to your backend.
+                    </p>
+
+                    <button class="primary-btn" id="savePersonalizationBtn">
+                        Save preferences
+                    </button>
+                </section>
+
+                <section class="settings-tab-content" data-settings-content="data">
+                    <h3>Data controls</h3>
+                    <p class="settings-description">
+                        Manage conversation data stored by this application.
+                    </p>
+
+                    <div class="setting-row">
+                        <div class="setting-copy">
+                            <strong>Local conversation history</strong>
+                            <small>History can be saved in this browser.</small>
+                        </div>
+                        <span class="setting-value">Browser storage</span>
+                    </div>
+
+                    <div class="setting-row">
+                        <div class="setting-copy">
+                            <strong>Export conversations</strong>
+                            <small>Download a JSON copy of your chat history.</small>
+                        </div>
+                        <button class="secondary-btn" id="exportDataBtn">Export</button>
+                    </div>
+
+                    <div class="danger-zone">
+                        <div>
+                            <strong>Clear local history</strong>
+                            <p>Remove saved conversations from this browser.</p>
+                        </div>
+                        <button class="danger-btn" id="clearAllHistoryBtn">Clear history</button>
+                    </div>
+                </section>
+
+                <section class="settings-tab-content" data-settings-content="about">
+                    <div class="about-brand">
+                        <span class="about-logo"><i class="fa-solid fa-asterisk"></i></span>
+                        <h3>ChatNova AI</h3>
+                        <p>Ideas start here.</p>
+                    </div>
+                    <div class="about-details">
+                        <div><span>Application</span><strong>ChatNova AI</strong></div>
+                        <div><span>Interface version</span><strong>1.0.0</strong></div>
+                        <div><span>Environment</span><strong id="environmentStatus">Frontend</strong></div>
+                    </div>
+                    <p class="form-help">
+                        This is an independently built AI chat application.
+                        It is not affiliated with OpenAI or ChatGPT.
+                    </p>
+                </section>
+
+            </div>
+        </div>
+
+        <div class="modal-footer settings-footer">
+            <span>Your preferences belong to your workspace.</span>
+            <button class="primary-btn" data-close-modal>Done</button>
+        </div>
+
+    </div>
+</section>
+
+<!-- =========================================
+     HELP MODAL
+========================================== -->
+<section class="modal-overlay" id="helpModal" hidden
+         role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+    <div class="modal help-modal">
+
+        <div class="modal-header">
+            <div>
+                <span class="modal-eyebrow">SUPPORT</span>
+                <h2 id="helpTitle">How can we help?</h2>
+            </div>
+            <button class="icon-btn modal-close" data-close-modal
+                    aria-label="Close help">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <div class="help-list">
+            <article class="help-item">
+                <span class="help-icon"><i class="fa-regular fa-message"></i></span>
+                <div>
+                    <strong>Starting a conversation</strong>
+                    <p>Write a message in the composer and press Enter or the send button.</p>
+                </div>
+            </article>
+
+            <article class="help-item">
+                <span class="help-icon"><i class="fa-solid fa-clock-rotate-left"></i></span>
+                <div>
+                    <strong>Finding old chats</strong>
+                    <p>Use the sidebar history and search controls to find saved conversations.</p>
+                </div>
+            </article>
+
+            <article class="help-item">
+                <span class="help-icon"><i class="fa-solid fa-paperclip"></i></span>
+                <div>
+                    <strong>Adding files</strong>
+                    <p>Choose a file using the attachment control. File analysis requires backend support.</p>
+                </div>
+            </article>
+
+            <article class="help-item">
+                <span class="help-icon"><i class="fa-solid fa-shield-halved"></i></span>
+                <div>
+                    <strong>Privacy and safety</strong>
+                    <p>Never enter passwords, API keys, or other sensitive information into an untrusted service.</p>
+                </div>
+            </article>
+        </div>
+
+        <div class="modal-footer">
+            <span>ChatNova AI help</span>
+            <button class="primary-btn" data-close-modal>Got it</button>
+        </div>
+
+    </div>
+</section>
+
+<!-- =========================================
+     CREATE PROJECT MODAL
+========================================== -->
+<section class="modal-overlay" id="projectModal" hidden
+         role="dialog" aria-modal="true" aria-labelledby="projectModalTitle">
+    <div class="modal compact-modal">
+
+        <div class="modal-header">
+            <div>
+                <span class="modal-eyebrow">ORGANIZATION</span>
+                <h2 id="projectModalTitle">Create a project</h2>
+            </div>
+            <button class="icon-btn modal-close" data-close-modal
+                    aria-label="Close project form">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <form id="projectForm">
+            <label class="form-label" for="projectNameInput">Project name</label>
+            <input class="form-input" id="projectNameInput"
+                   maxlength="80" required
+                   placeholder="e.g. Web Development">
+
+            <label class="form-label" for="projectDescriptionInput">Description</label>
+            <textarea class="form-textarea" id="projectDescriptionInput"
+                      maxlength="500"
+                      placeholder="What is this project about?"></textarea>
+
+            <div class="modal-form-actions">
+                <button type="button" class="secondary-btn" data-close-modal>Cancel</button>
+                <button type="submit" class="primary-btn">Create project</button>
+            </div>
+        </form>
+
+    </div>
+</section>
+
+<!-- =========================================
+     RENAME CHAT MODAL
+========================================== -->
+<section class="modal-overlay" id="renameModal" hidden
+         role="dialog" aria-modal="true" aria-labelledby="renameModalTitle">
+    <div class="modal compact-modal">
+
+        <div class="modal-header">
+            <div>
+                <span class="modal-eyebrow">CONVERSATION</span>
+                <h2 id="renameModalTitle">Rename chat</h2>
+            </div>
+            <button class="icon-btn modal-close" data-close-modal
+                    aria-label="Close rename dialog">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <form id="renameForm">
+            <label class="form-label" for="renameInput">Conversation title</label>
+            <input class="form-input" id="renameInput"
+                   maxlength="120" required
+                   placeholder="Enter a title">
+
+            <div class="modal-form-actions">
+                <button type="button" class="secondary-btn" data-close-modal>Cancel</button>
+                <button type="submit" class="primary-btn">Save title</button>
+            </div>
+        </form>
+
+    </div>
+</section>
+
+<!-- =========================================
+     SHARE CHAT MODAL
+========================================== -->
+<section class="modal-overlay" id="shareModal" hidden
+         role="dialog" aria-modal="true" aria-labelledby="shareModalTitle">
+    <div class="modal compact-modal">
+
+        <div class="modal-header">
+            <div>
+                <span class="modal-eyebrow">SHARE</span>
+                <h2 id="shareModalTitle">Share conversation</h2>
+            </div>
+            <button class="icon-btn modal-close" data-close-modal
+                    aria-label="Close sharing dialog">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <p class="modal-description">
+            Export or copy your conversation. Public sharing links require
+            a server-side sharing feature.
+        </p>
+
+        <div class="share-options">
+            <button class="share-option" id="copyConversationBtn">
+                <span><i class="fa-regular fa-copy"></i></span>
+                <span>
+                    <strong>Copy conversation</strong>
+                    <small>Copy the current chat as text.</small>
+                </span>
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+
+            <button class="share-option" id="downloadConversationBtn">
+                <span><i class="fa-solid fa-download"></i></span>
+                <span>
+                    <strong>Download conversation</strong>
+                    <small>Save a text copy to your device.</small>
+                </span>
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+        </div>
+
+    </div>
+</section>
+
+<!-- =========================================
+     CONVERSATION CONTEXT MENU
+========================================== -->
+<div class="context-menu" id="conversationContextMenu" hidden>
+    <button id="contextRenameBtn">
+        <i class="fa-regular fa-pen-to-square"></i> Rename
+    </button>
+    <button id="contextExportBtn">
+        <i class="fa-solid fa-download"></i> Export conversation
+    </button>
+    <div class="context-divider"></div>
+    <button class="context-danger" id="contextDeleteBtn">
+        <i class="fa-regular fa-trash-can"></i> Delete conversation
+    </button>
+</div>
+
+<!-- =========================================
+     CONFIRMATION DIALOG
+========================================== -->
+<section class="modal-overlay" id="confirmModal" hidden
+         role="alertdialog" aria-modal="true" aria-labelledby="confirmTitle">
+    <div class="modal compact-modal">
+
+        <div class="confirm-icon">
+            <i class="fa-solid fa-circle-exclamation"></i>
+        </div>
+
+        <div class="confirm-copy">
+            <h2 id="confirmTitle">Are you sure?</h2>
+            <p id="confirmDescription">This action cannot be undone.</p>
+        </div>
+
+        <div class="modal-form-actions">
+            <button class="secondary-btn" id="cancelConfirmBtn">Cancel</button>
+            <button class="danger-btn" id="acceptConfirmBtn">Confirm</button>
+        </div>
+
+    </div>
+</section>
+
+<!-- =========================================
+     TOAST NOTIFICATIONS
+========================================== -->
+<div class="toast-region" id="toastRegion"
+     aria-live="polite" aria-atomic="true"></div>
+
+<!-- =========================================
+     FILE INPUTS
+========================================== -->
+<input type="file" id="fileInput" hidden
+       accept=".txt,.md,.csv,.json,.pdf,.png,.jpg,.jpeg,.webp">
+
+<input type="file" id="imageInput" hidden
+       accept="image/*">
+
+<!-- =========================================
+     JAVASCRIPT MODULES
+========================================== -->
+<script src="config.js"></script>
+<script src="ai.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
+```
